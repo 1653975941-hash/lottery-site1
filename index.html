@@ -1,1 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抽奖小站</title>
+<style>
+body {
+margin: 0;
+padding: 0;
+font-family: "Microsoft Yahei", sans-serif;
+text-align: center;
+background: url('你的背景插画.png') no-repeat center center fixed;
+background-size: cover;
+}
+h1 {
+margin-top: 50px;
+color: #fff;
+text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+}
+.btn {
+margin-top: 80px;
+background: url('你的按钮插画.png') no-repeat center;
+background-size: contain;
+width: 200px;
+height: 200px;
+border: none;
+cursor: pointer;
+}
+.btn:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+}
+.result {
+margin-top: 50px;
+font-size: 24px;
+font-weight: bold;
+color: #fff;
+text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+}
+.result-img {
+margin-top: 20px;
+max-width: 250px;
+}
+</style>
+</head>
+<body>
+<h1>🎉 欢迎来到我的抽奖小站 🎉</h1>
+<button id="draw-btn" class="btn" onclick="draw()"></button>
+<div class="result" id="result-text"></div>
+<img id="result-img" class="result-img" src="" alt="">
+
+
+<script>
+function draw() {
+// 检查是否已经抽过
+if (localStorage.getItem("alreadyDrawn")) {
+alert("你已经抽过啦！每人只能一次哦～");
+return;
+}
+
+
+const prizes = [
+{text: "恭喜！你中了特别大奖！", img: "特别奖插画.png"},
+{text: "获得安慰奖～", img: "安慰奖插画.png"},
+{text: "很遗憾没有中奖，再接再厉！", img: "没中奖插画.png"}
+];
+const result = prizes[Math.floor(Math.random() * prizes.length)];
+document.getElementById("result-text").innerText = result.text;
+document.getElementById("result-img").src = result.img;
+
+
+// 记录状态，禁止再次抽奖
+localStorage.setItem("alreadyDrawn", true);
+document.getElementById("draw-btn").disabled = true;
+}
+
+
+// 页面加载时检查是否已经抽过
+window.onload = function() {
+if (localStorage.getItem("alreadyDrawn")) {
+document.getElementById("draw-btn").disabled = true;
+document.getElementById("result-text").innerText = "你已经抽过一次啦！";
+}
+}
+</script>
+</body>
+</html>
 
